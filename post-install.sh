@@ -16,77 +16,77 @@ install() {
 #
 
 # Update system
-# sudo dnf upgrade -y --refresh
-# sudo dnf install "dnf-command(config-manager)" -y
+sudo dnf upgrade -y --refresh
+sudo dnf install "dnf-command(config-manager)" -y
 
-# # DNF Speedup
-# echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
-# echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
+# DNF Speedup
+echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
+echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
 
-# # RPM Fusion
-# sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-# sudo dnf groupupdate core -y
+# RPM Fusion
+sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf groupupdate core -y
 
-# # Set GNOME night light
-# gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
-# gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
+# Set GNOME night light
+gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
 
-# #
-# # Utilities
-# #
+#
+# Utilities
+#
 
-# sudo dnf install -y bat fzf bleachbit flatpak gnome-tweaks gnome-extensions-app zsh fira-code-fonts golang kitty wl-clipboard
-# flatpak install -y flatseal
-# sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+sudo dnf install -y bat fzf bleachbit flatpak gnome-tweaks gnome-extensions-app zsh fira-code-fonts golang kitty wl-clipboard
+flatpak install -y flatseal
+sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-# # OhMyZSH
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+# OhMyZSH
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
-# #
-# # Work Programs
-# #
+#
+# Work Programs
+#
 
-# # GitHub CLI
-# sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-# install gh
+# GitHub CLI
+sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+install gh
 
-# # Docker
-# sudo dnf remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-selinux docker-engine-selinux docker-engine
-# sudo dnf -y install dnf-plugins-core
-# sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-# sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-# sudo systemctl start docker
-# sudo usermod -aG docker $USER
+# Docker
+sudo dnf remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-selinux docker-engine-selinux docker-engine
+sudo dnf -y install dnf-plugins-core
+sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo systemctl start docker
+sudo usermod -aG docker $USER
 
-# # Kubectl
-# cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
-# [kubernetes]
-# name=Kubernetes
-# baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
-# enabled=1
-# gpgcheck=1
-# gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-# EOF
-# install kubectl
+# Kubectl
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+install kubectl
 
-# # Krew
-# (
-#   set -x; cd "$(mktemp -d)" &&
-#   OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
-#   ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
-#   KREW="krew-${OS}_${ARCH}" &&
-#   curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
-#   tar zxvf "${KREW}.tar.gz" &&
-#   ./"${KREW}" install krew
-# )
+# Krew
+(
+  set -x; cd "$(mktemp -d)" &&
+  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+  KREW="krew-${OS}_${ARCH}" &&
+  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+  tar zxvf "${KREW}.tar.gz" &&
+  ./"${KREW}" install krew
+)
 
-# # Kubectl/Krew plugins
-# $HOME/.krew/bin/kubectl-krew install ctx
-# $HOME/.krew/bin/kubectl-krew install ns
+# Kubectl/Krew plugins
+$HOME/.krew/bin/kubectl-krew install ctx
+$HOME/.krew/bin/kubectl-krew install ns
 
-# # Lens IDE
-# sudo dnf config-manager --add-repo https://downloads.k8slens.dev/rpm/lens.repo
-# install lens
+# Lens IDE
+sudo dnf config-manager --add-repo https://downloads.k8slens.dev/rpm/lens.repo
+install lens
 
 #
 # Applications
