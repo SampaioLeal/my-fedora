@@ -35,9 +35,16 @@ gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 40
 # Utilities
 #
 
-sudo dnf install -y bat fzf bleachbit flatpak gnome-tweaks gnome-extensions-app zsh fira-code-fonts golang kitty wl-clipboard
+sudo dnf install -y bat btop fzf bleachbit flatpak gnome-tweaks gnome-extensions-app zsh fira-code-fonts golang xclip
 flatpak install -y flatseal
 sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+# Kitty
+install kitty
+curl -L -o dracula-kitty.zip https://github.com/dracula/kitty/archive/master.zip
+unzip dracula-kitty.zip
+mkdir -p ~/.config/kitty
+cp kitty/kitty.conf kitty-master/dracula.conf kitty-master/diff.conf ~/.config/kitty
 
 # Pokemon color scripts
 git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git --depth=1
@@ -116,14 +123,19 @@ yarn global add awsp
 # Applications
 #
 
-install discord
-
-sudo flatpak install -y flathub com.spotify.Client
-
+# Opera Browser
 sudo flatpak install -y flathub com.opera.Opera
 
+# Discord
+install discord
+
+# Spotify
+sudo flatpak install -y flathub com.spotify.Client
+
+# Bitwarden
 sudo flatpak install -y flathub com.bitwarden.desktop
 
+# Visual Studio Code
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 cat <<EOF | sudo tee /etc/yum.repos.d/vscode.repo
 [code]
