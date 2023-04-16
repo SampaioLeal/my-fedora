@@ -43,6 +43,7 @@ sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub
 git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git --depth=1
 cd pokemon-colorscripts
 sudo ./install.sh
+cd ..
 
 # OhMyZSH
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
