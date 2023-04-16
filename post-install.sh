@@ -39,6 +39,11 @@ sudo dnf install -y bat fzf bleachbit flatpak gnome-tweaks gnome-extensions-app 
 flatpak install -y flatseal
 sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
+# Pokemon color scripts
+git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git --depth=1
+cd pokemon-colorscripts
+sudo ./install.sh
+
 # OhMyZSH
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
@@ -88,6 +93,24 @@ $HOME/.krew/bin/kubectl-krew install ns
 sudo dnf config-manager --add-repo https://downloads.k8slens.dev/rpm/lens.repo
 install lens
 
+# Helm
+install helm
+
+# nvm, NodeJS, npm and Yarn
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+source ~/.bashrc
+nvm install --lts
+npm install -g yarn
+
+# Deno
+curl -fsSL https://deno.land/x/install/install.sh | sh
+
+# aws-cli and awsp
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+yarn global add awsp
+
 #
 # Applications
 #
@@ -126,7 +149,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/z
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting --depth=1
 
 # Copying dotfiles
-cp ./zsh/.zshrc $HOME/.zshrc 
+cp ./zsh/.zshrc $HOME/.zshrc
 
 # Setting default shell
 # Please type: /bin/zsh
